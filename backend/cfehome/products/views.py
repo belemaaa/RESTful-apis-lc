@@ -15,12 +15,20 @@ class ProductDetailAPIView(generics.RetrieveAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerialzer
 
-# class ProductListAPIView(generics.ListAPIView):
-#     queryset = Product.objects.all()
-#     serializer_class = ProductSerialzer
+class ProductUpdateAPIView(generics.UpdateAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerialzer
+    lookup_field= 'pk'
+
+    def perform_update(self, serializer):
+        instance = serializer.save()
+        if not instance.content:
+            instance.content = instance.title
 
 
-# create, retrieve and list
+
+
+# create, retrieve and list - fbv
 @api_view(['GET', 'POST'])
 def product_alt_view(request, pk=None, *args, **kwargs):
     if request.method == "GET":
