@@ -25,10 +25,18 @@ class ProductUpdateAPIView(generics.UpdateAPIView):
         if not instance.content:
             instance.content = instance.title
 
+class ProductDestroyAPIView(generics.DestroyAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerialzer
+    lookup_field= 'pk'
+    
+    def perform_update(self, instance):
+        super().perform_destroy(instance)
 
 
 
-# create, retrieve and list - fbv
+
+# create, retrieve and list - using functions
 @api_view(['GET', 'POST'])
 def product_alt_view(request, pk=None, *args, **kwargs):
     if request.method == "GET":
