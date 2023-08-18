@@ -12,7 +12,8 @@ from .permissions import IsStaffPermission
 class ProductListCreateAPIView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerialzer
-    authentication_classes = [authentication.SessionAuthentication]
+    authentication_classes = [authentication.SessionAuthentication,
+                              authentication.TokenAuthentication]
     permission_classes = [IsStaffPermission]
 
 class ProductDetailAPIView(generics.RetrieveAPIView):
