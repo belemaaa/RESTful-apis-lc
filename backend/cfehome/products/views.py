@@ -30,7 +30,7 @@ class ProductDestroyAPIView(generics.DestroyAPIView):
     serializer_class = ProductSerialzer
     lookup_field= 'pk'
     
-    def perform_update(self, instance):
+    def perform_delete(self, instance):
         super().perform_destroy(instance)
 
 
