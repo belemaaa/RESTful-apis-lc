@@ -1,26 +1,22 @@
 from rest_framework import generics
-from rest_framework import authentication
-from rest_framework import permissions
 from .models import Product
 from .serializers import ProductSerialzer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
-from .permissions import IsStaffPermission
-from api.authentication import TokenAuthentication
+from api.mixins import StaffPermissionMixin
 
 
 
-class ProductListCreateAPIView(generics.ListCreateAPIView):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerialzer
-    permission_classes = [permissions.IsAdminUser, IsStaffPermission]
-
-class ProductDetailAPIView(generics.RetrieveAPIView):
+class ProductListCreateAPIView(StaffPermissionMixin, generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerialzer
 
-class ProductUpdateAPIView(generics.UpdateAPIView):
+class ProductDetailAPIView(StaffPermissionMixin, generics.RetrieveAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerialzer
+
+class ProductUpdateAPIView(StaffPermissionMixin, generics.UpdateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerialzer
     lookup_field= 'pk'
@@ -30,7 +26,7 @@ class ProductUpdateAPIView(generics.UpdateAPIView):
         if not instance.content:
             instance.content = instance.title
 
-class ProductDestroyAPIView(generics.DestroyAPIView):
+class ProductDestroyAPIView(StaffPermissionMixin, generics.DestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerialzer
     lookup_field= 'pk'
