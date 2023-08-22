@@ -2,13 +2,17 @@ from rest_framework import serializers
 from .models import Product
 
 class ProductSerialzer(serializers.ModelSerializer):
-    email = serializers.EmailField(write_only=True)
     class Meta:
         model = Product
         fields = [
-            'email',
             'title',
             'content',
             'price',
             'sale_price'
         ]
+    
+    def validate_title(self, value):
+        qs = Product.objects.filter(title__exact=value)
+        if qs.exists():
+            raise serializers.ValidationError(f"{value} already exists.")
+        return value
