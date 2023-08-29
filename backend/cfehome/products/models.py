@@ -15,16 +15,13 @@ class ProductQuerySet(models.QuerySet):
         if user is not None:
             qs = qs.is_public().filter(user=user)
         return qs
-    
-        # return self.filter(title__icontains=query)
-
 
 class ProductManager(models.Manager):
     def get_queryset(self, *args, **kwargs):
         return ProductQuerySet(self.model, using=self.db)
 
     def search(self, query, user=None):
-        return self.get_queryset().is_public().search(query, user=user)
+        return self.get_queryset().search(query, user=user)
 
 
 class Product(models.Model):
