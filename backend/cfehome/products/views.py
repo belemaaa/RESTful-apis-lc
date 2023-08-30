@@ -5,6 +5,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from api.mixins import StaffPermissionMixin
+from . import client
 
 
 
@@ -34,6 +35,14 @@ class ProductDestroyAPIView(StaffPermissionMixin, generics.DestroyAPIView):
     def perform_delete(self, instance):
         super().perform_destroy(instance)
 
+
+class SearchView(generics.GenericAPIView):
+    def get(self, request, *args, **kwargs):
+        query = self.kwargs.get('q')
+        if query is None:
+            return Response('', status=400)
+        results = client.perform_search(query)
+        return Response(results)
 
 
 
