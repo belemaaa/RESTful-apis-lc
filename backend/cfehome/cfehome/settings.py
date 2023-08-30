@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'algoliasearch_django',
     'rest_framework',
     'rest_framework.authtoken',
     'api',
@@ -137,3 +138,10 @@ REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
     "PAGE_SIZE": 10 
 }
+
+ALGOLIA = {
+    'APPLICATION_ID': '9AY3R1JB11',
+    'API_KEY': 'bda49cb0e35327b22d82437fe21e378d',
+    'INDEX_PREFIX': 'belema'
+}
+
