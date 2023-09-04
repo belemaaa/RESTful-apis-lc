@@ -55,7 +55,6 @@ def product_alt_view(request, pk=None, *args, **kwargs):
             data = ProductSerialzer(obj, many=False).data
             return Response(data)
 
-        #list view
         qs = Product.objects.all()
         data = ProductSerialzer(qs, many=True).data
         return Response(data)
