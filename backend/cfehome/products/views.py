@@ -46,7 +46,7 @@ class SearchView(generics.GenericAPIView):
 
 
 
-# create, retrieve and list - using functions
+# fbs
 @api_view(['GET', 'POST'])
 def product_alt_view(request, pk=None, *args, **kwargs):
     if request.method == "GET":
